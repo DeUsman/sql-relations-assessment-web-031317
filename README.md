@@ -73,3 +73,70 @@ end
 
 
 #### Write your domain model here:
+
+class Restaurant < ActiveRecord::Migration
+  def change
+    create_table :restaurants do |t|
+        t.string :restaurant_name
+        t.integer :owner_id
+        t.integer :review_id
+        end
+    end
+  end
+
+  class Owner < Active::Migration
+    def change
+      create_table :owners do |t|
+      t.string :owner_name
+      t.integer :restaurant_id 
+      end
+    end
+  end
+
+  class Customer < ActiveRecord::Migration
+    def change
+      create_table :customers do |t|
+        t.string :customer_name
+      end
+    end
+  end 
+
+  class Review < ActiveRecord::Migration
+    def change 
+      create_table :reviews do |t|
+        t.string :review
+        t.integer :customer_id
+        t.integer :restaurant_id  
+      end
+    end
+  end  
+
+
+Customer#reviews
+returns all of the reviews written by that customer
+
+SELECT * FROM reviews INNER JOIN customers ON reviews.customer_id = customers.id WHERE customers.id = ?
+
+Owner#restaurants
+returns all restaurants belonging to that owner
+
+SELECT * FROM restaurants INNER JOIN owners ON restaurants.owner_id = owners.id WHERE owners.id = ?
+
+Restaurant#owner
+returns the owner of that restaurant
+
+SELECT * FROM owners INNER JOIN restaurants ON restaurants.owner_id = owners.id WHERE restaurants.id = ?
+
+Review#customer
+returns the customer of that review
+
+SELECT * FROM customers INNER JOIN reviews ON reviews.customer_id = customers.id WHERE reviews.id = ?
+
+Review#restaurant
+returns the restaurant of that particular review  
+
+SELECT * FROM restaurants INNER JOIN reviews ON reviews.restaurant_id = restaurants.id WHERE reviews.id = ?
+
+
+
+
